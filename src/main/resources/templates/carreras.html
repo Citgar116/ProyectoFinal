@@ -1,225 +1,244 @@
 <!DOCTYPE html>
 <!-- beautify ignore:start -->
 <html
-  lang="es"
-  class="light-style layout-menu-fixed"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="/assets/"
-  data-template="vertical-menu-template-free"
+        lang="es"
+        class="light-style layout-menu-fixed"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="/assets/"
+        data-template="vertical-menu-template-free"
 >
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Carreras - SiReSe Admin</title>
+  <title>Carreras - SiReSe Admin</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
-    <!-- Icons -->
-    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Icons -->
+  <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="/assets/css/demo.css" />
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="/assets/css/demo.css" />
 
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
 
-    <!-- Helpers -->
-    <script src="/assets/vendor/js/helpers.js"></script>
-    <script src="/assets/js/config.js"></script>
-  </head>
+  <!-- Helpers -->
+  <script src="/assets/vendor/js/helpers.js"></script>
+  <script src="/assets/js/config.js"></script>
+</head>
 
-  <body>
-    <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
-      <div class="layout-container">
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+  <div class="layout-container">
 
-        <!-- Menu Sidebar -->
-        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-          <div class="app-brand demo">
-            <a href="admin" class="app-brand-link">
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">SiReSe</span>
-            </a>
-            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-              <i class="bx bx-chevron-left bx-sm align-middle"></i>
-            </a>
-          </div>
-          <div class="menu-inner-shadow"></div>
-          <ul class="menu-inner py-1">
-            <li class="menu-item">
-              <a href="admin" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Inicio</div>
-              </a>
-            </li>
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Módulos</span></li>
-            <li class="menu-item">
-              <a href="aspirantes" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-group"></i>
-                <div data-i18n="Aspirantes">Aspirantes</div>
-              </a>
-            </li>
-            <li class="menu-item active">
-              <a href="carreras" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-book"></i>
-                <div data-i18n="Carreras">Carreras</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="constancias" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-file"></i>
-                <div data-i18n="Constancias">Constancias</div>
-              </a>
-            </li>
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Sistema</span></li>
-            <li class="menu-item">
-              <a href="login" class="menu-link text-danger">
-                <i class="menu-icon tf-icons bx bx-power-off"></i>
-                <div data-i18n="Salir">Salir</div>
-              </a>
-            </li>
-          </ul>
-        </aside>
-        <!-- / Menu -->
-
-        <!-- Layout container -->
-        <div class="layout-page">
-          <!-- Navbar -->
-          <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
-            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)"><i class="bx bx-menu bx-sm"></i></a>
-            </div>
-            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-              <div class="navbar-nav align-items-center">
-                <div class="nav-item d-flex align-items-center"><span class="fs-4 lh-0">Carreras</span></div>
-              </div>
-            </div>
-          </nav>
-          <!-- / Navbar -->
-
-          <!-- Content wrapper -->
-          <div class="content-wrapper">
-            <!-- Content -->
-            <div class="container-xxl flex-grow-1 container-p-y">
-
-              <div class="d-flex justify-content-between align-items-center mb-4">
-                  <h4 class="fw-bold py-3 mb-0">Gestión de Carreras</h4>
-                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCarrera">
-                      <i class="bx bx-plus me-1"></i> Nueva Carrera
-                  </button>
-              </div>
-
-              <!-- Basic Bootstrap Table -->
-              <div class="card">
-                <div class="card-body">
-                  <div class="table-responsive text-nowrap">
-                    <table id="tablaCarreras" class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>Nombre</th>
-                          <th>Semestres</th>
-                          <th>Acciones</th>
-                        </tr>
-                      </thead>
-                      <tbody class="table-border-bottom-0">
-                        <tr>
-                          <td><strong>Ingeniería en Sistemas</strong></td>
-                          <td>9</td>
-                          <td>
-                            <button class="btn btn-icon btn-sm btn-outline-warning" title="Editar"><i class="bx bx-edit-alt"></i></button>
-                            <button class="btn btn-icon btn-sm btn-outline-danger btn-eliminar-carrera" title="Eliminar"><i class="bx bx-trash"></i></button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td><strong>Administración de Empresas</strong></td>
-                          <td>8</td>
-                          <td>
-                            <button class="btn btn-icon btn-sm btn-outline-warning" title="Editar"><i class="bx bx-edit-alt"></i></button>
-                            <button class="btn btn-icon btn-sm btn-outline-danger btn-eliminar-carrera" title="Eliminar"><i class="bx bx-trash"></i></button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              <!--/ Basic Bootstrap Table -->
-
-            </div>
-            <!-- / Content -->
-            <div class="content-backdrop fade"></div>
-          </div>
-          <!-- Content wrapper -->
-        </div>
-        <!-- / Layout page -->
+    <!-- Menu Sidebar -->
+    <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+      <div class="app-brand demo">
+        <a href="admin" class="app-brand-link">
+          <span class="app-brand-text demo menu-text fw-bolder ms-2">SiReSe</span>
+        </a>
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+          <i class="bx bx-chevron-left bx-sm align-middle"></i>
+        </a>
       </div>
-      <div class="layout-overlay layout-menu-toggle"></div>
-    </div>
-    <!-- / Layout wrapper -->
+      <div class="menu-inner-shadow"></div>
+      <ul class="menu-inner py-1">
+        <li class="menu-item">
+          <a href="admin" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <div data-i18n="Analytics">Inicio</div>
+          </a>
+        </li>
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">Módulos</span></li>
+        <li class="menu-item">
+          <a href="aspirantes" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-group"></i>
+            <div data-i18n="Aspirantes">Aspirantes</div>
+          </a>
+        </li>
+        <li class="menu-item active">
+          <a href="carreras" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-book"></i>
+            <div data-i18n="Carreras">Carreras</div>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="constancias" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-file"></i>
+            <div data-i18n="Constancias">Constancias</div>
+          </a>
+        </li>
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">Sistema</span></li>
+        <li class="menu-item">
+          <a href="login" class="menu-link text-danger">
+            <i class="menu-icon tf-icons bx bx-power-off"></i>
+            <div data-i18n="Salir">Salir</div>
+          </a>
+        </li>
+      </ul>
+    </aside>
+    <!-- / Menu -->
 
-    <!-- Modal Agregar/Editar Carrera -->
-    <div class="modal fade" id="modalCarrera" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Carrera</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formCarrera">
-                        <div class="mb-3">
-                            <label class="form-label">Nombre de la Carrera</label>
-                            <input type="text" class="form-control" id="nombreCarrera" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Semestres</label>
-                            <input type="number" class="form-control" id="semestresCarrera" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Observaciones</label>
-                            <textarea class="form-control" id="observacionesCarrera" rows="3"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btnGuardarCarrera">Guardar</button>
-                </div>
-            </div>
+    <!-- Layout container -->
+    <div class="layout-page">
+      <!-- Navbar -->
+      <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+          <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)"><i class="bx bx-menu bx-sm"></i></a>
         </div>
+        <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+          <div class="navbar-nav align-items-center">
+            <div class="nav-item d-flex align-items-center"><span class="fs-4 lh-0">Carreras</span></div>
+          </div>
+        </div>
+      </nav>
+      <!-- / Navbar -->
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold py-3 mb-0">Gestión de Carreras</h4>
+            <button class="btn btn-primary" id="btn-nueva-carrera" data-bs-toggle="modal" data-bs-target="#modalCarrera">
+              <i class="bx bx-plus me-1"></i> Nueva Carrera
+            </button>
+          </div>
+
+          <!-- Alerta de éxito / error -->
+          <div id="alerta-carreras" class="alert d-none mb-3" role="alert"></div>
+
+          <!-- Tabla de Carreras -->
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">Listado de Carreras</h5>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive text-nowrap">
+                <table id="tablaCarreras" class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Semestres</th>
+                    <th>Observaciones</th>
+                    <th>Acciones</th>
+                  </tr>
+                  </thead>
+                  <tbody id="tbody-carreras">
+                  <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">
+                      <span class="spinner-border spinner-border-sm me-2"></span>Cargando carreras...
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- / Content -->
+        <div class="content-backdrop fade"></div>
+      </div>
+      <!-- Content wrapper -->
     </div>
+    <!-- / Layout page -->
+  </div>
+  <div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
 
-    <!-- Core JS -->
-    <script src="/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="/assets/vendor/libs/popper/popper.js"></script>
-    <script src="/assets/vendor/js/bootstrap.js"></script>
-    <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="/assets/vendor/js/menu.js"></script>
+<!-- Modal Agregar/Editar Carrera -->
+<div class="modal fade" id="modalCarrera" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCarreraTitulo">Nueva Carrera</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="carreraId" value="">
+        <div class="mb-3">
+          <label class="form-label">Nombre de la Carrera <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" id="nombreCarrera" placeholder="Ej. Ingeniería en Sistemas" required>
+          <div class="invalid-feedback">El nombre es obligatorio.</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Semestres <span class="text-danger">*</span></label>
+          <input type="number" class="form-control" id="semestresCarrera" min="1" max="20" placeholder="Ej. 9" required>
+          <div class="invalid-feedback">Ingresa un número de semestres válido.</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Observaciones</label>
+          <textarea class="form-control" id="observacionesCarrera" rows="3" placeholder="Información adicional (opcional)"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="btnGuardarCarrera">
+          <span id="btnGuardarTexto">Guardar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <!-- DataTables -->
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<!-- Modal Confirmar Eliminación -->
+<div class="modal fade" id="modalEliminarCarrera" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmar eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>¿Estás seguro de eliminar la carrera <strong id="nombreCarreraEliminar"></strong>?</p>
+        <p class="text-muted small">Esta acción no se puede deshacer.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="btnConfirmarEliminar">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <!-- Main JS -->
-    <script src="/assets/js/main.js"></script>
-    <script src="/app-ajax.js"></script>
-  </body>
+<!-- Core JS -->
+<script src="/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/assets/vendor/libs/popper/popper.js"></script>
+<script src="/assets/vendor/js/bootstrap.js"></script>
+<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/assets/vendor/js/menu.js"></script>
+
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<!-- Main JS -->
+<script src="/assets/js/main.js"></script>
+<script src="/app-ajax.js"></script>
+</body>
 </html>
