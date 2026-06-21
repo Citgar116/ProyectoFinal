@@ -1,54 +1,45 @@
 <!DOCTYPE html>
-<!-- beautify ignore:start -->
 <html
-  lang="es"
-  class="light-style customizer-hide"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="/assets/"
-  data-template="vertical-menu-template-free"
+        lang="es"
+        class="light-style customizer-hide"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="/assets/"
+        data-template="vertical-menu-template-free"
 >
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>SiReSe - Registro de Aspirantes</title>
+  <title>SiReSe - Registro de Aspirantes</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
-    <!-- Icons -->
-    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
+  <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="/assets/css/demo.css" />
+  <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="/assets/css/demo.css" />
 
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="/assets/vendor/css/pages/page-auth.css" />
+  <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <link rel="stylesheet" href="/assets/vendor/css/pages/page-auth.css" />
 
-    <!-- Helpers -->
-    <script src="/assets/vendor/js/helpers.js"></script>
-    <script src="/assets/js/config.js"></script>
-  </head>
+  <script src="/assets/vendor/js/helpers.js"></script>
+  <script src="/assets/js/config.js"></script>
+</head>
 
-  <body>
-    <!-- Content -->
-    <div class="container-xxl">
-      <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner">
-          <div class="card">
-            <div class="card-body">
-              <!-- Logo -->
-              <div class="app-brand justify-content-center">
-                <a href="#" class="app-brand-link gap-2">
+<body>
+<div class="container-xxl">
+  <div class="authentication-wrapper authentication-basic container-p-y">
+    <div class="authentication-inner">
+      <div class="card">
+        <div class="card-body">
+          <div class="app-brand justify-content-center">
+            <a href="#" class="app-brand-link gap-2">
                   <span class="app-brand-logo demo">
                      <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                       <defs>
@@ -83,74 +74,67 @@
                       </g>
                     </svg>
                   </span>
-                  <span class="app-brand-text demo text-body fw-bolder">SiReSe</span>
-                </a>
-              </div>
-              <!-- /Logo -->
-              <h4 class="mb-2 text-center">Registro de Aspirantes 🎓</h4>
-              <p class="mb-4 text-center">Ingresa tus datos para registrarte en el sistema</p>
-
-              <form id="formRegistroAspirante" class="mb-3">
-                <div class="mb-3">
-                  <label for="nombre" class="form-label">Nombre Completo</label>
-                  <div class="input-group input-group-merge">
-                    <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
-                    <input type="text" class="form-control" id="nombre" placeholder="Juan Pérez" aria-describedby="basic-icon-default-fullname2" required />
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label for="telefono" class="form-label">Teléfono</label>
-                  <div class="input-group input-group-merge">
-                    <span id="basic-icon-default-phone2" class="input-group-text"><i class="bx bx-phone"></i></span>
-                    <input type="tel" id="telefono" class="form-control phone-mask" placeholder="55 1234 5678" aria-describedby="basic-icon-default-phone2" pattern="[0-9]{10}" title="Debe contener 10 dígitos numéricos" required />
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Correo Electrónico</label>
-                  <div class="input-group input-group-merge">
-                    <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                    <input type="email" id="email" class="form-control" placeholder="juan@example.com" required />
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label for="carrera" class="form-label">Carrera de Interés</label>
-                  <div class="input-group input-group-merge">
-                     <span class="input-group-text"><i class="bx bxs-graduation"></i></span>
-                     <select class="form-select" id="carrera" required>
-                        <option value="" disabled selected>Selecciona una carrera...</option>
-                        <option value="1">Ingeniería en Sistemas</option>
-                        <option value="2">Administración de Empresas</option>
-                        <option value="3">Derecho</option>
-                     </select>
-                  </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-6">
-                        <button type="button" class="btn btn-outline-secondary d-grid w-100">Info</button>
-                    </div>
-                    <div class="col-6">
-                        <button type="submit" class="btn btn-primary d-grid w-100">Enviar</button>
-                    </div>
-                </div>
-              </form>
-
-            </div>
+              <span class="app-brand-text demo text-body fw-bolder">SiReSe</span>
+            </a>
           </div>
+          <h4 class="mb-2 text-center">Registro de Aspirantes</h4>
+          <p class="mb-4 text-center">Ingresa tus datos para registrarte en el sistema</p>
+
+          <form id="formRegistroAspirante" class="mb-3">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre Completo</label>
+              <div class="input-group input-group-merge">
+                <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                <input type="text" class="form-control" id="nombre" placeholder="Juan Pérez" required />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="telefono" class="form-label">Teléfono</label>
+              <div class="input-group input-group-merge">
+                <span id="basic-icon-default-phone2" class="input-group-text"><i class="bx bx-phone"></i></span>
+                <input type="tel" id="telefono" class="form-control phone-mask" placeholder="55 1234 5678" pattern="[0-9]{10}" title="Debe contener 10 dígitos numéricos" required />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo Electrónico</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                <input type="email" id="email" class="form-control" placeholder="juan@example.com" required />
+              </div>
+            </div>
+
+            <div class="mb-3 form-password-toggle">
+              <label for="password" class="form-label">Contraseña</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text"><i class="bx bx-lock-alt"></i></span>
+                <input type="password" id="password" class="form-control" placeholder="············" required />
+                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+              </div>
+            </div>
+
+            <div class="mb-3 mt-4">
+              <button type="submit" class="btn btn-primary d-grid w-100">Enviar Registro</button>
+            </div>
+          </form>
+
+          <p class="text-center mt-3">
+            <span>¿Ya tienes cuenta de Administrador?</span>
+            <a href="/login">
+              <span>Iniciar sesión aquí</span>
+            </a>
+          </p>
+
         </div>
       </div>
     </div>
-    <!-- / Content -->
-
-    <!-- Core JS -->
-    <script src="/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="/assets/vendor/libs/popper/popper.js"></script>
-    <script src="/assets/vendor/js/bootstrap.js"></script>
-    <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="/assets/vendor/js/menu.js"></script>
-    <!-- Main JS -->
-    <script src="/assets/js/main.js"></script>
-    <!-- Custom logic -->
-    <script src="/app-ajax.js"></script>
-  </body>
+  </div>
+</div>
+<script src="/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/assets/vendor/libs/popper/popper.js"></script>
+<script src="/assets/vendor/js/bootstrap.js"></script>
+<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/assets/vendor/js/menu.js"></script>
+<script src="/assets/js/main.js"></script>
+<script src="/app-ajax.js"></script>
+</body>
 </html>

@@ -38,4 +38,9 @@ public class AspiranteServiceImpl implements AspiranteService {
     public boolean existsByEmail(String email) {
         return aspiranteRepository.existsByEmail(email);
     }
+
+    @Override
+    public Optional<Aspirante> authenticate(String email, String contrasenia){
+        return aspiranteRepository.findByEmailAndContrasenia(email, contrasenia);
+    }
 }

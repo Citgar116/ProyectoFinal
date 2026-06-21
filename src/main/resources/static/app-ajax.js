@@ -1,22 +1,24 @@
 /**
- * LÓGICA FRONT-END Y PETICIONES AJAX SIMULADAS (app-ajax.js)
- * Archivo principal para la gestión de las operaciones de SiReSe
+ * LÓGICA FRONT-END Y PETICIONES AJAX REALES (app-ajax.js)
+ * Archivo principal conectado al Backend de Spring Boot para SiReSe
  */
 
 $(document).ready(function () {
-    
+
     // --- 1. PÁGINA DE REGISTRO PÚBLICO (index.html) ---
-    
+
     $('#formRegistroAspirante').on('submit', function (e) {
         e.preventDefault();
-        
+
+        // Creamos el objeto JSON con los campos actuales del formulario e index.html
         let formData = {
             nombre: $('#nombre').val(),
             telefono: $('#telefono').val(),
             email: $('#email').val(),
-            carrera_id: $('#carrera').val()
+            contrasenia: $('#password').val() // Captura la contraseña nueva
         };
-        
+
+        // Validamos si el correo es único haciendo una petición real al backend
         validarCorreoUnico(formData.email, function(esValido) {
             if (esValido) {
                 registrarAspirante(formData);
@@ -27,49 +29,88 @@ $(document).ready(function () {
     });
 
     function validarCorreoUnico(email, callback) {
-        // Simulación de petición AJAX al backend
-        console.log(`Verificando unicidad del correo: ${email}`);
-        setTimeout(() => {
-            // Simulamos que "test@test.com" ya existe
-            let existe = (email === "test@test.com"); 
-            callback(!existe); 
-        }, 500);
+        $.ajax({
+            url: `/api/aspirantes/validar-email?email=${email}`,
+            type: 'GET',
+            success: function(existe) {
+                // Si existe es true, el correo NO es único (no es válido)
+                callback(!existe);
+            },
+            error: function() {
+                console.error("Error al validar el correo electrónico.");
+                callback(false);
+            }
+        });
     }
 
     function registrarAspirante(formData) {
-        // Simulación de envío AJAX
-        console.log("Enviando datos al servidor:", formData);
-        setTimeout(() => {
-            alert("¡Registro exitoso! Tus datos han sido guardados.");
-            console.log("Simulando envío de correo al administrador notificando el nuevo registro...");
-            $('#formRegistroAspirante')[0].reset(); // Limpiar formulario
-        }, 800);
+        $.ajax({
+            url: '/api/aspirantes',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function (response) {
+                alert("¡Registro exitoso! Tus datos han sido guardados.");
+                $('#formRegistroAspirante')[0].reset(); // Limpiar formulario
+                window.location.href = "/login"; // Redirigir al login automáticamente
+            },
+            error: function (xhr) {
+                alert("Hubo un error al procesar el registro. Inténtalo de nuevo.");
+            }
+        });
     }
 
-    // --- 2. LOGIN DE ADMINISTRADOR (login.html) ---
-    
+    // --- 2. LOGIN CON DOBLE ROL: ADMIN O ASPIRANTE (login.html) ---
+
     $('#formLogin').on('submit', function(e) {
         e.preventDefault();
         let user = $('#usuario').val();
         let pass = $('#password').val();
-        loginAdmin(user, pass);
+        loginUsuario(user, pass);
     });
 
-    function loginAdmin(user, pass) {
-        console.log(`Intentando login para el usuario: ${user}`);
-        // Simulación de AJAX
-        setTimeout(() => {
-            if (user === "admin" && pass === "1234") {
-                alert("Bienvenido, Administrador");
-                window.location.href = "admin.html"; // Redirigir al dashboard
-            } else {
-                alert("Usuario o contraseña incorrectos");
+    function loginUsuario(user, pass) {
+        // 1. Intentamos loguear primero como Administrador en /api/usuarios/login
+        $.ajax({
+            url: '/api/usuarios/login',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                usuario: user,
+                contrasenia: pass
+            }),
+            success: function (response) {
+                alert("¡Bienvenido, Administrador!");
+                window.location.href = "/admin"; // Redirige a tu vista mapeada de admin
+            },
+            error: function (xhr) {
+                // 2. Si las credenciales no corresponden a un Admin (401), intentamos como Aspirante
+                if (xhr.status === 401) {
+                    $.ajax({
+                        url: '/api/aspirantes/login',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            email: user, // El input de usuario sirve como correo para el aspirante
+                            contrasenia: pass
+                        }),
+                        success: function (response) {
+                            alert("¡Inicio de sesión exitoso como Aspirante!");
+                            window.location.href = "/aspirantes"; // Cambia esto a la pestaña que deba ver el aspirante
+                        },
+                        error: function () {
+                            alert("Usuario/Correo o contraseña incorrectos");
+                        }
+                    });
+                } else {
+                    alert("Error al conectar con el servidor.");
+                }
             }
-        }, 500);
+        });
     }
 
     // --- 3. INICIALIZACIÓN DE DATATABLES (carreras.html y aspirantes.html) ---
-    
+
     if ($('#tablaCarreras').length > 0) {
         let tablaCarreras = $('#tablaCarreras').DataTable({
             dom: 'Bfrtip',
@@ -77,11 +118,10 @@ $(document).ready(function () {
             language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' }
         });
 
-        // Simular eliminación en la tabla en caliente
         $('#tablaCarreras tbody').on('click', '.btn-eliminar-carrera', function () {
             if(confirm("¿Estás seguro de eliminar esta carrera?")) {
                 tablaCarreras.row($(this).parents('tr')).remove().draw();
-                console.log("Carrera eliminada simuladamente.");
+                console.log("Carrera eliminada.");
             }
         });
     }
@@ -93,11 +133,10 @@ $(document).ready(function () {
             language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' }
         });
 
-        // Eventos para los botones de la tabla
         $('#tablaAspirantes tbody').on('click', '.btn-correo-indiv', function () {
             let tr = $(this).closest('tr');
             let rowData = tablaAspirantes.row(tr).data();
-            let nombre = rowData[0]; // asumiendo nombre en col 0
+            let nombre = rowData[0];
             $('#correoAspiranteNombre').text(nombre);
             $('#modalCorreoIndividual').modal('show');
         });
@@ -111,11 +150,10 @@ $(document).ready(function () {
         });
     }
 
-    // --- SIMULACIÓN GUARDAR MODALES ---
+    // --- GUARDAR MODALES ---
     $('#btnGuardarCarrera').click(function() {
-        console.log("Simulando guardado de carrera:", $('#nombreCarrera').val());
+        console.log("Guardando carrera:", $('#nombreCarrera').val());
         $('#modalCarrera').modal('hide');
-        // Aquí normalmente harías tablaCarreras.row.add([...]).draw(); o recargarías
     });
 
     $('#btnEnviarCorreoMasivo').click(function() {

@@ -19,9 +19,8 @@ public class Aspirante {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "carrera_id", nullable = false)
-    private Carrera carrera;
+    @Column(nullable = false)
+    private String contrasenia;
 
     public Aspirante() {}
 
@@ -37,6 +36,6 @@ public class Aspirante {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public Carrera getCarrera() { return carrera; }
-    public void setCarrera(Carrera carrera) { this.carrera = carrera; }
+    public String getContrasenia() {return contrasenia; }
+    public void setContrasenia(String contrasenia) {this.contrasenia = contrasenia; }
 }

@@ -11,4 +11,5 @@ public interface AspiranteService {
     Aspirante saveAspirante(Aspirante aspirante);
     void deleteAspirante(Long id);
     boolean existsByEmail(String email);
+    Optional<Aspirante> authenticate(String email, String contrasenia);
 }

@@ -49,4 +49,14 @@ public class AspiranteController {
         boolean exists = aspiranteService.existsByEmail(email);
         return new ResponseEntity<>(exists, HttpStatus.OK);
     }
+
+    @PostMapping ("/login")
+        public ResponseEntity<String> login(@RequestBody Aspirante loginRequest) {
+        Optional<Aspirante> aspirante = aspiranteService.authenticate(loginRequest.getEmail(), loginRequest.getContrasenia());
+        if (aspirante.isPresent()) {
+            return new ResponseEntity<>("Login exitoso", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Credenciales invalidas", HttpStatus.UNAUTHORIZED);
+        }
+    }
 }

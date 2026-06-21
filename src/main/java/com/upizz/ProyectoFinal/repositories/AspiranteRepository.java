@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface AspiranteRepository extends JpaRepository<com.upizz.ProyectoFinal.models.Aspirante, Long> {
     Optional<Aspirante> findByEmail(String email);
     boolean existsByEmail(String email);
+
+    Optional<Aspirante> findByEmailAndContrasenia(String email, String contrasenia);
 }

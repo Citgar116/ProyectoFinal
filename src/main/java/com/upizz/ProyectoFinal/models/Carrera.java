@@ -19,9 +19,6 @@ public class Carrera {
     @Column(length = 500)
     private String observaciones;
 
-    @OneToMany(mappedBy = "carrera", cascade = CascadeType.ALL)
-    private List<Aspirante> aspirantes;
-
     public Carrera() {}
 
     public Long getId() { return id; }
@@ -36,6 +33,4 @@ public class Carrera {
     public String getObservaciones() { return observaciones; }
     public void setObservaciones(String observaciones) { this.observaciones = observaciones; }
 
-    public List<Aspirante> getAspirantes() { return aspirantes; }
-    public void setAspirantes(List<Aspirante> aspirantes) { this.aspirantes = aspirantes; }
 }

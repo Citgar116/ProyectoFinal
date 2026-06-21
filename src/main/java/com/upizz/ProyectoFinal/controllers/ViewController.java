@@ -8,6 +8,11 @@ public class ViewController {
 
     @GetMapping("/")
     public String index() {
+        return "login";
+    }
+
+    @GetMapping("/registro")
+    public String registro() {
         return "index";
     }
 
