@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/aspirantes")
@@ -29,6 +30,39 @@ public class AspiranteController {
         return aspiranteService.getAspiranteById(id)
                 .map(aspirante -> new ResponseEntity<>(aspirante, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    // Registro público de aspirantes
+    @PostMapping
+    public ResponseEntity<String> registrarAspirante(@RequestBody Aspirante aspirante) {
+        if (aspirante.getEmail() != null && aspiranteService.existsByEmail(aspirante.getEmail())) {
+            return new ResponseEntity<>("El correo ya está registrado", HttpStatus.CONFLICT);
+        }
+        if (aspirante.getFechaRegistro() == null || aspirante.getFechaRegistro().isBlank()) {
+            aspirante.setFechaRegistro(java.time.LocalDate.now().toString());
+        }
+        aspiranteService.saveAspirante(aspirante);
+        return new ResponseEntity<>("Registro exitoso", HttpStatus.CREATED);
+    }
+
+    // Validación de correo único (usada por el formulario de registro)
+    @GetMapping("/validar-email")
+    public ResponseEntity<Boolean> validarEmail(@RequestParam String email) {
+        return new ResponseEntity<>(aspiranteService.existsByEmail(email), HttpStatus.OK);
+    }
+
+    // Login de aspirantes (por correo)
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody Aspirante loginRequest) {
+        if (loginRequest.getEmail() == null || loginRequest.getEmail().isBlank()
+                || loginRequest.getContrasenia() == null || loginRequest.getContrasenia().isBlank()) {
+            return new ResponseEntity<>("Credenciales invalidas", HttpStatus.UNAUTHORIZED);
+        }
+        Optional<Aspirante> aspirante = aspiranteService.authenticate(loginRequest.getEmail(), loginRequest.getContrasenia());
+        if (aspirante.isPresent()) {
+            return new ResponseEntity<>("ASPIRANTE", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Credenciales invalidas", HttpStatus.UNAUTHORIZED);
     }
 
     @PostMapping("/enviar-correo")
