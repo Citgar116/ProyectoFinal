@@ -41,6 +41,18 @@ public class AspiranteController {
         return new ResponseEntity<>("Correo enviado correctamente", HttpStatus.OK);
     }
 
+    @GetMapping("/validar-email")
+    public ResponseEntity<Boolean> validarEmail(@RequestParam String email) {
+        boolean existe = aspiranteService.existsByEmail(email);
+        return new ResponseEntity<>(existe, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Aspirante> createAspirante(@RequestBody Aspirante aspirante) {
+        Aspirante nuevoAspirante = aspiranteService.saveAspirante(aspirante);
+        return new ResponseEntity<>(nuevoAspirante, HttpStatus.CREATED);
+    }
+
     @PostMapping("/correo-masivo")
     public ResponseEntity<String> enviarCorreoMasivo(@RequestBody Map<String, String> request) {
         String asunto = request.get("asunto");

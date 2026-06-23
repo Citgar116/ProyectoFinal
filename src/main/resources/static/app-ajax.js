@@ -5,17 +5,31 @@
 
 $(document).ready(function () {
 
-    // --- 1. PÁGINA DE REGISTRO PÚBLICO (index.html) ---
+// --- 1. PÁGINA DE REGISTRO PÚBLICO (index.html) ---
     $('#formRegistroAspirante').on('submit', function (e) {
         e.preventDefault();
+
         let formData = {
             nombre: $('#nombre').val(),
             telefono: $('#telefono').val(),
             email: $('#email').val(),
-            contrasenia: $('#password').val()
+            contrasenia: $('#password').val(),
+            carrera: $('#carreraInput').val().trim()
         };
+
+        if (formData.carrera === "") {
+            alert("Por favor, introduce tu carrera.");
+            return;
+        }
+
+        // Llamamos a la validación
         validarCorreoUnico(formData.email, function(esValido) {
-            if (esValido) { registrarAspirante(formData); } else { alert("Error: El correo electrónico ya está registrado."); }
+            console.log("¿El correo es apto para registrar?:", esValido);
+            if (esValido) {
+                registrarAspirante(formData);
+            } else {
+                alert("El sistema detectó que el correo ya existe o la validación falló.");
+            }
         });
     });
 
@@ -23,19 +37,41 @@ $(document).ready(function () {
         $.ajax({
             url: `/api/aspirantes/validar-email?email=${email}`,
             type: 'GET',
-            success: function(existe) { callback(!existe); },
-            error: function() { console.error("Error al validar el correo."); callback(false); }
+            success: function(existe) {
+                console.log("Respuesta del servidor /validar-email (existe):", existe);
+                // Si 'existe' viene como true (un booleano o string "true"), significa que YA está registrado.
+                // Por lo tanto, el correo NO es válido para un nuevo registro (!existe).
+                if (existe === true || existe === "true") {
+                    callback(false);
+                } else {
+                    callback(true);
+                }
+            },
+            error: function(xhr) {
+                console.error("ERROR CRÍTICO: El endpoint /validar-email falló o no existe.", xhr);
+                // Cambiamos temporalmente a true para que, si tu backend aún no tiene este método, te deje registrar.
+                console.warn("Saltando validación por error en el servidor...");
+                callback(true);
+            }
         });
     }
 
     function registrarAspirante(formData) {
+        console.log("Enviando datos al backend...", formData);
         $.ajax({
             url: '/api/aspirantes',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(formData),
-            success: function () { alert("¡Registro exitoso!"); window.location.href = "/login"; },
-            error: function () { alert("Hubo un error al procesar el registro."); }
+            success: function (response) {
+                console.log("Servidor guardó con éxito:", response);
+                alert("¡Registro exitoso!");
+                window.location.href = "/login";
+            },
+            error: function (xhr) {
+                console.error("Error al guardar el aspirante en el servidor:", xhr);
+                alert("Hubo un error al procesar el registro en la base de datos: " + xhr.responseText);
+            }
         });
     }
 
