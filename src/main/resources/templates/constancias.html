@@ -23,13 +23,19 @@
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
             <div class="app-brand demo">
                 <a href="admin" class="app-brand-link">
+                    <span class="app-brand-logo demo"><img src="/assets/img/ipn_logo.jpg" alt="IPN" style="height: 30px;" /></span>
                     <span class="app-brand-text demo menu-text fw-bolder ms-2">SiReSe</span>
                 </a>
             </div>
+            <div class="menu-inner-shadow"></div>
             <ul class="menu-inner py-1">
-                <li class="menu-item"><a href="admin" class="menu-link"><i class="menu-icon tf-icons bx bx-home-circle"></i> Inicio</a></li>
-                <li class="menu-item"><a href="aspirantes" class="menu-link"><i class="menu-icon tf-icons bx bx-group"></i> Aspirantes</a></li>
-                <li class="menu-item active"><a href="constancias" class="menu-link"><i class="menu-icon tf-icons bx bx-file"></i> Constancias</a></li>
+                <li class="menu-item"><a href="admin" class="menu-link"><i class="menu-icon tf-icons bx bx-home-circle"></i><div>Inicio</div></a></li>
+                <li class="menu-header small text-uppercase"><span class="menu-header-text">Módulos</span></li>
+                <li class="menu-item"><a href="aspirantes" class="menu-link"><i class="menu-icon tf-icons bx bx-group"></i><div>Aspirantes</div></a></li>
+                <li class="menu-item"><a href="carreras" class="menu-link"><i class="menu-icon tf-icons bx bx-book"></i><div>Carreras</div></a></li>
+                <li class="menu-item active"><a href="constancias" class="menu-link"><i class="menu-icon tf-icons bx bx-file"></i><div>Constancias</div></a></li>
+                <li class="menu-header small text-uppercase"><span class="menu-header-text">Sistema</span></li>
+                <li class="menu-item"><a href="login" class="menu-link text-danger"><i class="menu-icon tf-icons bx bx-power-off"></i><div>Salir</div></a></li>
             </ul>
         </aside>
 
@@ -39,7 +45,7 @@
                     <h4 class="fw-bold py-3 mb-4">Emisión de Constancias</h4>
 
                     <div class="card mb-4 p-4 text-center">
-                        <img src="/assets/img/logo_ipn.jpg" alt="Logo IPN" style="width: 120px; margin: 0 auto;">
+                        <img src="/assets/img/ipn_logo.jpg" alt="Logo IPN" style="width: 120px; margin: 0 auto;">
                         <h5 class="mt-3">INSTITUTO POLITÉCNICO NACIONAL</h5>
                         <p>UPIIZ - UNIDAD PROFESIONAL INTERDISCIPLINARIA DE INGENIERÍA CAMPUS ZACATECAS</p>
                     </div>
@@ -74,7 +80,7 @@
         data.forEach(a => {
           rows += `<tr>
             <td><strong>${a.nombre}</strong></td>
-            <td>${a.carrera ? a.carrera.nombre : 'Sin asignar'}</td>
+            <td>${a.carrera || 'Sin asignar'}</td>
             <td>
               <a href="/api/aspirantes/pdf/${a.id}" class="btn btn-sm btn-outline-danger" target="_blank">
                 <i class="bx bxs-file-pdf"></i> Generar Constancia
