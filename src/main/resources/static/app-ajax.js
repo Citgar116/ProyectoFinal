@@ -5,7 +5,9 @@
 
 $(document).ready(function () {
 
-// --- 1. PÁGINA DE REGISTRO PÚBLICO (index.html) ---
+    // =========================================================================
+    // --- 1. PÁGINA DE REGISTRO PÚBLICO (index.html) ---
+    // =========================================================================
     $('#formRegistroAspirante').on('submit', function (e) {
         e.preventDefault();
 
@@ -22,13 +24,11 @@ $(document).ready(function () {
             return;
         }
 
-        // Llamamos a la validación
         validarCorreoUnico(formData.email, function(esValido) {
-            console.log("¿El correo es apto para registrar?:", esValido);
             if (esValido) {
                 registrarAspirante(formData);
             } else {
-                alert("El sistema detectó que el correo ya existe o la validación falló.");
+                alert("Error: El correo electrónico ya está registrado en el sistema.");
             }
         });
     });
@@ -38,9 +38,6 @@ $(document).ready(function () {
             url: `/api/aspirantes/validar-email?email=${email}`,
             type: 'GET',
             success: function(existe) {
-                console.log("Respuesta del servidor /validar-email (existe):", existe);
-                // Si 'existe' viene como true (un booleano o string "true"), significa que YA está registrado.
-                // Por lo tanto, el correo NO es válido para un nuevo registro (!existe).
                 if (existe === true || existe === "true") {
                     callback(false);
                 } else {
@@ -48,34 +45,32 @@ $(document).ready(function () {
                 }
             },
             error: function(xhr) {
-                console.error("ERROR CRÍTICO: El endpoint /validar-email falló o no existe.", xhr);
-                // Cambiamos temporalmente a true para que, si tu backend aún no tiene este método, te deje registrar.
-                console.warn("Saltando validación por error en el servidor...");
-                callback(true);
+                console.error("Error al validar el correo en el servidor:", xhr);
+                callback(false);
             }
         });
     }
 
     function registrarAspirante(formData) {
-        console.log("Enviando datos al backend...", formData);
         $.ajax({
             url: '/api/aspirantes',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function (response) {
-                console.log("Servidor guardó con éxito:", response);
                 alert("¡Registro exitoso!");
                 window.location.href = "/login";
             },
             error: function (xhr) {
-                console.error("Error al guardar el aspirante en el servidor:", xhr);
-                alert("Hubo un error al procesar el registro en la base de datos: " + xhr.responseText);
+                console.error("Error al guardar el aspirante:", xhr);
+                alert("Hubo un error al procesar el registro en la base de datos.");
             }
         });
     }
 
+    // =========================================================================
     // --- 2. LOGIN (login.html) ---
+    // =========================================================================
     $('#formLogin').on('submit', function(e) {
         e.preventDefault();
         let user = $('#usuario').val();
@@ -105,31 +100,149 @@ $(document).ready(function () {
         });
     }
 
-    // --- 3. LÓGICA DE CARRERAS (Integrada) ---
-    const CarrerasStore = {
-        KEY: 'sireSe_carreras',
-        getAll() { try { return JSON.parse(localStorage.getItem(this.KEY)) || []; } catch(e) { return []; } },
-        save(lista) { localStorage.setItem(this.KEY, JSON.stringify(lista)); },
-        agregar(carrera) { const lista = this.getAll(); if (!carrera.id) carrera.id = 'local_' + Date.now(); lista.push(carrera); this.save(lista); return carrera; },
-        actualizar(id, datos) { const lista = this.getAll().map(c => String(c.id) === String(id) ? { ...c, ...datos } : c); this.save(lista); },
-        eliminar(id) { const lista = this.getAll().filter(c => String(c.id) !== String(id)); this.save(lista); },
-        cargarDesdeAPI(apiData) { this.save(apiData); }
-    };
+    // =========================================================================
+    // --- 3. LÓGICA DE CARRERAS (CRUD Conectado al Servidor) ---
+    // =========================================================================
+    function renderTablaCarreras() {
+        $.get('/api/carreras', function(carreras) {
+            const tbody = $('#tbody-carreras');
+            tbody.empty();
 
-    if ($('#tablaCarreras').length > 0) {
-        $.get('/api/carreras').done(function(data) { if (data && data.length) CarrerasStore.cargarDesdeAPI(data); renderTablaCarreras(CarrerasStore.getAll()); });
-        $('#btnGuardarCarrera').on('click', guardarCarrera);
-    }
+            if(carreras.length === 0) {
+                tbody.append('<tr><td colspan="5" class="text-center text-muted py-3">No hay carreras registradas.</td></tr>');
+                return;
+            }
 
-    function renderTablaCarreras(carreras) {
-        const tbody = $('#tbody-carreras');
-        tbody.empty();
-        carreras.forEach(function(c, i) {
-            tbody.append(`<tr data-id="${c.id}"><td>${i + 1}</td><td><strong>${c.nombre}</strong></td><td>${c.semestres}</td><td>${c.observaciones || '—'}</td><td><button class="btn btn-sm btn-outline-warning btn-editar-carrera" data-id="${c.id}">Editar</button></td></tr>`);
+            carreras.forEach(function(c, i) {
+                tbody.append(`
+                    <tr data-id="${c.id}">
+                        <td>${i + 1}</td>
+                        <td><strong>${c.nombre}</strong></td>
+                        <td>${c.semestres} semestres</td>
+                        <td>${c.observaciones || '—'}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-warning btn-editar-carrera"
+                                    data-id="${c.id}"
+                                    data-nombre="${c.nombre}"
+                                    data-semestres="${c.semestres}"
+                                    data-observaciones="${c.observaciones || ''}">
+                                <i class="bx bx-edit-alt me-1"></i> Editar
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger btn-eliminar-carrera"
+                                    data-id="${c.id}"
+                                    data-nombre="${c.nombre}">
+                                <i class="bx bx-trash me-1"></i> Borrar
+                            </button>
+                        </td>
+                    </tr>
+                `);
+            });
+        }).fail(function() {
+            $('#tbody-carreras').html('<tr><td colspan="5" class="text-center text-danger py-3">Error al cargar carreras desde el servidor.</td></tr>');
         });
     }
 
+    // Inicializar la tabla si el elemento existe en el DOM
+    if ($('#tablaCarreras').length > 0) {
+        renderTablaCarreras();
+    }
+
+    // Limpiar modal al hacer clic en "Nueva Carrera"
+    $('#btn-nueva-carrera').on('click', function() {
+        $('#modalCarreraTitulo').text('Nueva Carrera');
+        $('#btnGuardarTexto').text('Guardar');
+        $('#carreraId').val('');
+        $('#nombreCarrera').val('');
+        $('#semestresCarrera').val('');
+        $('#observacionesCarrera').val('');
+    });
+
+    // Delegación de eventos para el botón "Editar" (Mapea los datos al modal)
+    $('#tbody-carreras').on('click', '.btn-editar-carrera', function() {
+        $('#modalCarreraTitulo').text('Editar Carrera');
+        $('#btnGuardarTexto').text('Actualizar');
+
+        $('#carreraId').val($(this).data('id'));
+        $('#nombreCarrera').val($(this).data('nombre'));
+        $('#semestresCarrera').val($(this).data('semestres'));
+        $('#observacionesCarrera').val($(this).data('observaciones'));
+
+        $('#modalCarrera').modal('show');
+    });
+
+    // Guardar o Actualizar (Determina dinámicamente si es POST o PUT)
+    $('#btnGuardarCarrera').on('click', function(e) {
+        e.preventDefault();
+
+        let id = $('#carreraId').val();
+        let carreraData = {
+            nombre: $('#nombreCarrera').val().trim(),
+            semestres: parseInt($('#semestresCarrera').val()),
+            observaciones: $('#observacionesCarrera').val().trim()
+        };
+
+        if(!carreraData.nombre || !carreraData.semestres) {
+            alert("Por favor completa los campos obligatorios (*)");
+            return;
+        }
+
+        let url = id ? `/api/carreras/${id}` : '/api/carreras';
+        let tipoMetodo = id ? 'PUT' : 'POST';
+
+        $.ajax({
+            url: url,
+            type: tipoMetodo,
+            contentType: 'application/json',
+            data: JSON.stringify(carreraData),
+            success: function() {
+                $('#modalCarrera').modal('hide');
+                mostrarAlertaCarreras('¡Operación realizada con éxito!', 'alert-success');
+                renderTablaCarreras();
+            },
+            error: function(xhr) {
+                alert("Error al procesar la carrera: " + xhr.responseText);
+            }
+        });
+    });
+
+    // Delegación de eventos para el botón "Borrar" (Abre modal de confirmación)
+    let idCarreraAEliminar = null;
+    $('#tbody-carreras').on('click', '.btn-eliminar-carrera', function() {
+        idCarreraAEliminar = $(this).data('id');
+        $('#nombreCarreraEliminar').text($(this).data('nombre'));
+        $('#modalEliminarCarrera').modal('show');
+    });
+
+    // Confirmar eliminación física (DELETE)
+    $('#btnConfirmarEliminar').on('click', function() {
+        if(idCarreraAEliminar) {
+            $.ajax({
+                url: `/api/carreras/${idCarreraAEliminar}`,
+                type: 'DELETE',
+                success: function() {
+                    $('#modalEliminarCarrera').modal('hide');
+                    mostrarAlertaCarreras('La carrera ha sido eliminada del sistema.', 'alert-warning');
+                    renderTablaCarreras();
+                    idCarreraAEliminar = null;
+                },
+                error: function() {
+                    alert("No se pudo eliminar la carrera.");
+                }
+            });
+        }
+    });
+
+    function mostrarAlertaCarreras(mensaje, claseBootstrap) {
+        const alerta = $('#alerta-carreras');
+        alerta.removeClass('d-none alert-success alert-warning alert-danger').addClass(claseBootstrap).text(mensaje);
+        setTimeout(function() {
+            alerta.addClass('d-none');
+        }, 4000);
+    }
+
+    // =========================================================================
     // --- 4. CARGA DINÁMICA DE ASPIRANTES ---
+    // =========================================================================
     if ($('#tablaAspirantes').length > 0) {
         $.get('/api/aspirantes', function(aspirantes) {
             let tbody = $('#tbody-aspirantes');
@@ -157,13 +270,11 @@ $(document).ready(function () {
             $('#tablaAspirantes').DataTable({ dom: 'Bfrtip', buttons: ['copy', 'csv', 'excel'] });
         });
 
-        // Eventos delegados
         $('#tbody-aspirantes').on('click', '.btn-correo-indiv', function () {
             $('#correoAspiranteEmail').val($(this).data('email'));
             $('#modalCorreoIndividual').modal('show');
         });
 
-        // Lógica del botón ver detalle (Ojo)
         $('#tbody-aspirantes').on('click', '.btn-ver-detalle', function () {
             $('#detalleAspiranteContenido').html(`
                 <p><strong>Nombre:</strong> ${$(this).data('nombre')}</p>
@@ -179,7 +290,9 @@ $(document).ready(function () {
         });
     }
 
+    // =========================================================================
     // --- 5. CORREOS Y ESTADÍSTICAS ---
+    // =========================================================================
     $('#btnEnviarCorreoIndividual').on('click', function() {
         $.ajax({
             url: '/api/aspirantes/enviar-correo',
@@ -192,5 +305,11 @@ $(document).ready(function () {
 
     if ($('#stat-aspirantes').length) {
         $.get('/api/aspirantes').done(function(data) { $('#stat-aspirantes').text(data.length); });
+    }
+    if ($('#stat-carreras').length) {
+        $.get('/api/carreras').done(function(data) { $('#stat-carreras').text(data.length); });
+    }
+    if ($('#stat-constancias').length) {
+        $.get('/api/aspirantes').done(function(data) { $('#stat-constancias').text(data.length); });
     }
 });

@@ -19,7 +19,6 @@ public class AspiranteController {
     @Autowired
     private AspiranteService aspiranteService;
 
-
     @GetMapping
     public ResponseEntity<List<Aspirante>> getAllAspirantes() {
         return new ResponseEntity<>(aspiranteService.getAllAspirantes(), HttpStatus.OK);
@@ -32,7 +31,7 @@ public class AspiranteController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    // Registro público de aspirantes
+    // Único método POST base para registro público de aspirantes
     @PostMapping
     public ResponseEntity<String> registrarAspirante(@RequestBody Aspirante aspirante) {
         if (aspirante.getEmail() != null && aspiranteService.existsByEmail(aspirante.getEmail())) {
@@ -43,12 +42,6 @@ public class AspiranteController {
         }
         aspiranteService.saveAspirante(aspirante);
         return new ResponseEntity<>("Registro exitoso", HttpStatus.CREATED);
-    }
-
-    // Validación de correo único (usada por el formulario de registro)
-    @GetMapping("/validar-email")
-    public ResponseEntity<Boolean> validarEmail(@RequestParam String email) {
-        return new ResponseEntity<>(aspiranteService.existsByEmail(email), HttpStatus.OK);
     }
 
     // Login de aspirantes (por correo)
@@ -75,16 +68,11 @@ public class AspiranteController {
         return new ResponseEntity<>("Correo enviado correctamente", HttpStatus.OK);
     }
 
+    // Corregido a /validar-email y conectando con existsByEmail
     @GetMapping("/validar-email")
     public ResponseEntity<Boolean> validarEmail(@RequestParam String email) {
         boolean existe = aspiranteService.existsByEmail(email);
         return new ResponseEntity<>(existe, HttpStatus.OK);
-    }
-
-    @PostMapping
-    public ResponseEntity<Aspirante> createAspirante(@RequestBody Aspirante aspirante) {
-        Aspirante nuevoAspirante = aspiranteService.saveAspirante(aspirante);
-        return new ResponseEntity<>(nuevoAspirante, HttpStatus.CREATED);
     }
 
     @PostMapping("/correo-masivo")
@@ -95,7 +83,6 @@ public class AspiranteController {
         aspiranteService.enviarCorreoMasivo(asunto, mensaje);
         return new ResponseEntity<>("Correos masivos enviados correctamente", HttpStatus.OK);
     }
-
 
     @GetMapping("/pdf/{id}")
     public void generarConstancia(@PathVariable Long id, HttpServletResponse response) {
